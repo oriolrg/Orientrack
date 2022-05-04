@@ -5,7 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "preinstall": "npx npm-force-resolutions"
+  },
+  "resolutions": {
+    "ansi-regex": "5.0.1"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^5.0.0",
@@ -14,6 +18,7 @@
     "firebase": "^9.7.0",
     "gpxparser": "^3.0.8",
     "mapbox-gl": "^2.8.2",
+    "minimist": "^1.2.6",
     "vue": "^3.2.33",
     "vue-mapbox": "^0.4.1",
     "vue-router": "^4.0.15",
