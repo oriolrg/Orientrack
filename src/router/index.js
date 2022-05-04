@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
+import Home from '../views/HomeView.vue'
+import Login from '../views/LoginView.vue'
 import UploadTrack from '../views/UploadTrack.vue'
 import { auth } from '../firebase'
 
@@ -24,7 +24,7 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/About.vue'),
+    component: () => import('../views/AboutView.vue'),
     meta: {
       requiresAuth: true
     }
