@@ -4,6 +4,12 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import axios from "axios";
 
 export default {
+    data() {
+        return {
+            access_token : process.env.VUE_APP_MAP_ACCESS_TOKEN,
+            numCoord:null,
+        };
+    },
     methods: {
         async createMap() {
             try {

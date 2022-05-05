@@ -1,82 +1,27 @@
 <template>
     <div class="main">
         <div class="flex">
-        <!-- Map Display here 
-            <div class="map-holder">
-                <div id="map"></div>
-            </div>-->
-            <MapaComponent></MapaComponent>
-            <!-- Coordinates Display here -->
-            <div class="dislpay-arena">
-                <div v-if="loading"><input type="file" ref="doc" @change="readFile()" /></div>
-                <div v-if="dades">
-                    <h1>Nom activitat: {{ nom }}</h1>
-                    <input v-model="nom" placeholder="Nom activitat"  required>
-                    <p>Latitud: {{ center[0] }}</p>
-                    <p>Longitud: {{ center[1] }}</p>
-                </div>
-                <div v-if="dades" class="coordinates-header">
-                    <p>Localització Inici: {{ location }}</p>
-                    <div class="form-group">
-                        <button type="button" class="copy-btn" @click="moveCenter">
-                            Moure
-                        </button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="button" class="copy-btn" @click="saveActivitat">
-                        Guardar
-                    </button>
-                </div>
-            </div>
+          <!-- Map Display here-->
+          <MapaComponent></MapaComponent>
+          <!-- Coordinates Display here -->
+          <MenuMapaComponent></MenuMapaComponent> 
         </div>
     </div>
 </template>
 
 <script>
 //import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import mapBox from '../plugins/mapbox/mapbox.js';
-import readGpx from '../plugins/mapbox/readGpx.js';
-import saveDb from '../firebase/saveDb.js';
+//import mapBox from '../plugins/mapbox/mapbox.js';
+//import readGpx from '../plugins/mapbox/readGpx.js';
+/* import saveDb from '../firebase/saveDb.js'; */
 import MapaComponent from '@/components/MapaComponent.vue'
+import MenuMapaComponent from '@/components/MenuMapaComponent.vue'
+/* import { auth } from '../firebase'; */
 
 export default {
     components: {
         MapaComponent,
-    },
-    mixins: [mapBox, readGpx, saveDb],
-    data() {
-        return {
-            i:0,
-            loading: true,
-            dades: false,
-            location: "",
-            nom: null,
-            access_token: process.env.VUE_APP_MAP_ACCESS_TOKEN,
-            center: [null,null,],
-            map: {},
-            numCoord:null,
-        };
-    },
-
-    mounted() {
-    },
-    methods: {
-        saveActivitat(){
-            if(this.nom){
-                this.docData.nom = this.nom;
-                console.log(this.getNumberPoints())
-                for (let index = 0; index < this.content.features[0].geometry.coordinates.length ; index += this.getNumberPoints()) {
-                    console.log(this.content.features[0].geometry.coordinates[index][0])
-                    console.log(this.content.features[0].geometry.coordinates[index][1])
-                    
-                }
-                this.saveData(this.docData);
-            }else{alert("Introdueix el nom")}
-        },
-        getNumberPoints(){
-            return parseInt(this.content.features[0].geometry.coordinates.length / 10)
-        }
+        MenuMapaComponent,
     },
 };
 </script>

@@ -18,7 +18,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto"></ul>
         <ul class="navbar-nav ml-auto">
-          <template v-if="$store.state.user.displayName">
+          <template v-if="$store.state.user">
             <div class="nav-item">{{$store.state.user.displayName}}</div>
             <li class="nav-item">
               <a class="nav-link" @click="$store.dispatch('logout')">Sign out</a>
