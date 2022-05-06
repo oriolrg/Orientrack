@@ -13,7 +13,7 @@ export default {
     methods: {
         async createMap() {
             try {
-                this.numCoord = this.getNumberPoints();
+                //TODO treballar de marcar els punts al mapa
                 this.getLocation();
                 //Guardo el token de mapbox a mapboxgl
                 mapboxgl.accessToken = this.access_token;
@@ -23,28 +23,6 @@ export default {
                     center: this.center,
                     zoom: 15,
                 });
-                //geocoder dona controls al mapa visualitzat
-                /*let geocoder =  new MapboxGeocoder({
-                    accessToken: this.access_token,
-                    mapboxgl: mapboxgl,
-                    marker: false,
-                }); 
-                this.map.addControl(geocoder);
-                geocoder.on("result", (e) => {
-                    const marker = new mapboxgl.Marker({
-                        draggable: true,
-                        color: "#D80739",
-                    })
-                    .setLngLat(e.result.center)
-                    .addTo(this.map);
-                    this.center = e.result.center;
-                    marker.on("dragend", (e) => {
-                        this.center = Object.values(e.target.getLngLat());
-                    });
-                });*/
-                
-                //console.log("kkkkk"+Object.keys(this.content.properties.name))
-                //console.log("kkkkk"+this.content.properties.name)
                 this.map.on('load', () => {
                     this.map.addSource("route", {
                         'type': 'geojson',
@@ -95,7 +73,7 @@ export default {
             return;
         },
         moveCenter() {
-            this.i +=this.numCoord;
+            this.i +=this.numPuntsCoordSalt;
             this.center[0] = this.content.features[0].geometry.coordinates[this.i][0];
             this.center[1] = this.content.features[0].geometry.coordinates[this.i][1];
             this.map.flyTo({

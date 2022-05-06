@@ -6,6 +6,7 @@
           <input v-model="nom" placeholder="Nom activitat"  required>
           <p>Latitud: {{ center[0] }}</p>
           <p>Longitud: {{ center[1] }}</p>
+          <p>Km: {{ this.docData.kmTotals }}</p>
       </div>
       <div v-if="dades" class="coordinates-header">
           <p>Localització Inici: {{ location }}</p>
@@ -15,6 +16,8 @@
               </button>
           </div>
       </div>
+      <!-- TODO treballar el component per a cada punt -->
+      <InputRangeComponent></InputRangeComponent>
       <div v-if="!missatgeEstat" class="form-group">
           <button type="button" class="copy-btn" @click="saveActivitat">
               Guardar
@@ -32,10 +35,11 @@
 import mapBox from '../plugins/mapbox/mapbox.js';
 import readGpx from '../plugins/mapbox/readGpx.js';
 import saveDb from '../firebase/saveDb.js';
-import { auth } from '../firebase';
+import InputRangeComponent from '@/components/inputRangeComponent.vue'
 
 export default {
   components: {
+    InputRangeComponent,
   },
   mixins: [mapBox, readGpx, saveDb],
   data() {
@@ -58,39 +62,10 @@ export default {
     //Guardo l'activitat carregada
     saveActivitat(){
       if(this.nom){
+        //Crido a la funcio savedata de firebase/saveDb.js
         this.saveData();
       }else{alert("Introdueix el nom")}
-    },
-    getWaipoints(){
-      //TODO calcul km totals i afegir al guardar
-      //TODO Calcul temps total activitat i guardar
-      var track = [];
-      this.docData.id_usuari = auth.currentUser.uid;
-      this.docData.nom = this.nom;
-      for (let index = 0; index < this.content.features[0].geometry.coordinates.length ; index += this.getNumberPoints()) {
-          track.push(
-          {
-              longitud:this.content.features[0].geometry.coordinates[index][0],
-              latitud:this.content.features[0].geometry.coordinates[index][1],
-              altitud:this.content.features[0].geometry.coordinates[index][2],
-              spoiler:null,
-          }
-          );                    
-      }
-      this.docData.waiPoints = track;
-    },
-    //Obting el numero de punts 
-    getNumberPoints(){
-      return parseInt(this.content.features[0].geometry.coordinates.length / 10)
-    },
-    //Obting els km totals de l'activitat
-    getKmTotals(){
-
-    },
-    //Obting temps l'activitat
-    getTempsTotal(){
-
-    }
+    },  
   },
 };
 </script>
